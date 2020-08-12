@@ -43,6 +43,12 @@ router.post('/autocomplete', (req, res) => {
     .catch(err => console.log(err))
 })
 
+router.post('/moviesByProvider', (req, res) => {
+  Peliculas.getMoviesByProvider(req.body)
+    .then(result => res.json(result))
+    .catch(err => console.log(err))
+})
+
 router.post('/releatedmovies', (req, res) => {
   Peliculas.getReleatedMovies(req.body.genreIds)
     .then(result => res.json(result))

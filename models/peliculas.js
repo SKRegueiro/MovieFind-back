@@ -52,8 +52,18 @@ const getGenresById = (id) => {
     return new Promise((resolve, reject) => {
         db.query('SELECT * FROM genres WHERE id = ?', [id], (err, result) => {
             if (err) reject(err);
+            console.log(result)
             resolve(format(result));
         })
+    })
+}
+
+const getMoviesByProvider = (id) => {
+    return new Promise((resolve, reject) => {
+        db.query(`SELECT * FROM shows  WHERE original_release_year = 2019 or original_release_year = 2018 or  original_release_year = 2017 or  original_release_year = 2016 or  original_release_year = 2015 or  original_release_year = 2014 or  original_release_year = 2013 or  original_release_year = 2012 AND offers LIKE '%${id}%'  ORDER BY tmdb_popularity DESC LIMIT 49`), (err, result) => {
+            if (err) reject(err)
+            resolve(format(result))
+        }
     })
 }
 
@@ -97,5 +107,6 @@ module.exports = {
     getGenresById: getGenresById,
     autocomplete: autocomplete,
     getMoreMovies: getMoreMovies,
-    getReleatedMovies: getReleatedMovies
+    getReleatedMovies: getReleatedMovies,
+    getMoviesByProvider: getMoviesByProvider
 };
